@@ -1,32 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Simulación Monte Carlo de la TRM (COP por USD) a 40 trimestres y conversión
-de las cuotas del crédito en dólares a pesos (punto A.3).
+de las cuotas del crédito en dólares a pesos .
 
-Año 1 (trimestres 1-4): anclado a los tres escenarios del análisis fundamental.
-  - Se sortea un escenario (base / peso fuerte / peso débil) con su probabilidad.
-  - La TRM al trimestre 4 sigue una lognormal cuya mediana es el punto medio
-    geométrico del rango del escenario y cuya dispersión reproduce ese rango
-    como intervalo de 80 %.
-  - La trayectoria intermedia es un puente browniano entre la TRM inicial y ese valor.
-
-Años 2-10 (trimestres 5-40): paseo aleatorio geométrico cuya deriva y volatilidad
-  YA NO SON SUPUESTOS FIJOS: se estiman con los rendimientos logarítmicos
-  trimestrales de la TRM histórica (archivo trm_historica_trimestral.csv).
-  La ventana histórica se elige en VENTANA_ELEGIDA; el script también corre
-  todas las ventanas de VENTANAS para comparar sus resultados.
-  Si el archivo trm_historica_trimestral.csv no está en la carpeta de trabajo,
-  el código usa la misma serie, que va embebida más abajo (TRM_HISTORICA_CSV).
-
-Uso: python3 simulacion_trm.py   (desde la carpeta raíz del repositorio)
-Salidas (en la carpeta resultados/):
-  trm_trayectorias.csv        trayectorias (spot, escenarios, percentiles simulados)
-  trm_paths.npy               las N_SIM trayectorias simuladas (ventana elegida)
-  parametros_por_ventana.csv  deriva, volatilidad y resultados por ventana histórica
-  cuotas_cop_simulacion.csv   percentiles de la cuota en pesos por trimestre
-  tabla_trm_40_trimestres.csv     TRM proyectada en cada trimestre (spot, escenarios, simulación)
-  tabla_cuotas_cop_40_trimestres.csv  cuota de cada trimestre en USD y en pesos
-  graficas_simulacion_trm.png     las gráficas del resultado
 """
 import os
 import numpy as np
