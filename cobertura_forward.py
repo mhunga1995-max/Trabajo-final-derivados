@@ -1,39 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Parte B: cobertura con cuatro forwards anuales consecutivos (años 7 a 10).
-
-Supuestos (ver hoja «B Supuestos cobertura» del Excel):
-  - Al terminar el año 6 (trimestre 24) quedan 16 cuotas de USD 5.106,06.
-  - Se cubre el 75 % de esa exposición, repartido según los pagos de cada año:
-    cuatro forwards de 0,75 × 4 cuotas = USD 15.318,18 cada uno.
-  - Forwards consecutivos de un año, liquidados por compensación (NDF):
-      forward 1: se pacta en el trimestre 24 y vence en el 28 (año 7)
-      forward 2: se pacta en el 28 y vence en el 32 (año 8)
-      forward 3: se pacta en el 32 y vence en el 36 (año 9)
-      forward 4: se pacta en el 36 y vence en el 40 (año 10)
-    Precio pactado F = S(pacto) × (1 + i_COP) / (1 + i_USD)   (paridad cubierta, 1 año)
-    Liquidación al vencimiento (COP) = N × (S(vencimiento) − F)
-  - Las cuotas trimestrales se compran siempre al spot; el NDF compensa la diferencia.
-  - Variante de comparación («strip»): los cuatro precios se fijan en el trimestre 24
-    con plazos de 1, 2, 3 y 4 años: F_k = S(24) × [(1 + i_COP)/(1 + i_USD)]^k.
-
-Las trayectorias de la TRM vienen de simulacion_trm.py (ventana de flotación libre)
-con innovaciones normales y con innovaciones t de Student.
-
-Salidas: cobertura_resultados.csv, cobertura_por_forward.csv, sensibilidad_tasas.csv,
-trayectorias_representativas.csv y graficas_cobertura_forward.png.
-
-Salidas en la carpeta resultados/.
-
-Uso: python3 cobertura_forward.py   (desde la carpeta raíz del repositorio, junto a
-simulacion_trm.py).
+Parte B.
 """
 import numpy as np
 import pandas as pd
 
 import simulacion_trm as sim    # parte A: trayectorias de la TRM y tabla del crédito
 
-# ----------------------------- PARÁMETROS ---------------------------------
+#  PARÁMETROS 
 # Cotización de mercado (B.1): Cbonds, USD/COP FX Forward Rate (Mid), 27/10/2026
 SPOT_MERCADO = 3132.07          # S/N
 FWD_1Y_MERCADO = 3386.30        # 1 año
@@ -50,7 +24,7 @@ TOLERANCIA_PPTO = 0.10          # «fracaso»: costo cubierto > presupuesto + 10
 TASA_DESCUENTO_EA = 0.13        # para el VPN en pesos (TES a 10 años > 13 %)
 NU_STRESS = 4                   # t de Student de estrés (colas mucho más gruesas)
 MOSTRAR_GRAFICAS = True         # dibuja las gráficas (en Colab/Jupyter aparecen debajo de la celda)
-# --------------------------------------------------------------------------
+# 
 
 
 def prima(i_cop, i_usd):
